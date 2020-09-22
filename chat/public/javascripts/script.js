@@ -1,13 +1,13 @@
 const ws = new WebSocket("ws://localhost:3000");
 
-const mensages = [];
 ws.onmessage = (msg) => {
   renderMessages(JSON.parse(msg.data));
 };
 
-
 const renderMessages = (data) => {
-  const html = data.map((item) => `<p><em>${item.author}:</em> ${item.message}</p>`).join(" ");
+  const html = data
+    .map((item) => `<p><em>${item.author}:</em> ${item.messages}</p>`)
+    .join(" ");
   document.getElementById("messages").innerHTML = html;
 };
 
@@ -17,7 +17,7 @@ const handleSubmit = (evt) => {
   const author = document.getElementById("author");
 
   const msg = {
-    message: message.value,
+    messages: message.value,
     author: author.value,
   };
 
@@ -34,7 +34,7 @@ const handleSubmit = (evt) => {
         message.value = "";
         console.log(result);
       } else {
-        const err = validarMsg(msg.author, msg.message);
+        const err = validarMsg(msg.author, msg.messages);
         alert(err);
       }
     })
